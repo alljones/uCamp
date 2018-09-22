@@ -1,0 +1,23 @@
+{
+  "name": "camp",
+  "version": "1.0.0",
+  "description": "Camp location Website",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alljones/camp.git"
+  },
+  "author": "Allan Jones",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alljones/camp/issues"
+  },
+  "homepage": "https://github.com/alljones/camp#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.3"
+  }
+}
