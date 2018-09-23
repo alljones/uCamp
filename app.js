@@ -1,9 +1,16 @@
 const express = require("express");
-
 const app = express();
 const PORT = 8080;
+const bodyParser = require("body-parser");
 
+app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
+
+let campgrounds = [
+    {name: "Oak Farm", image: "https://pixabay.com/get/eb37b60e20f6093ed1584d05fb1d4e97e07ee3d21cac104496f7c77ca7eebcbb_340.jpg"},
+    {name: "Craighead Forest", image: "https://farm8.staticflickr.com/7503/15623542806_8058899c7d.jpg"},
+    {name: "Granite Hill", image: "https://farm9.staticflickr.com/8292/7814932340_111154c9a8.jpg"}
+];
 
 // =============================================================
 
@@ -16,15 +23,23 @@ app.get("/", function(req,res){
 });
 
 app.get("/campgrounds", function(req,res){
-    let campgrounds = [
-        {name: "Oak Farm", image: "https://pixabay.com/get/eb37b60e20f6093ed1584d05fb1d4e97e07ee3d21cac104496f7c77ca7eebcbb_340.jpg"},
-        {name: "Craighead Forest", image: "https://farm8.staticflickr.com/7503/15623542806_8058899c7d.jpg"},
-        {name: "Granite Hill", image: "https://farm9.staticflickr.com/8292/7814932340_111154c9a8.jpg"}
-    ];
 
     res.render("campgrounds", {campgrounds: campgrounds});
 });
 
+app.post("/campgrounds", function(req,res){
+    // get data from from and add to campgrounds array
+    let name = req.body.name;
+    let image = req.body.image;
+    let newCamp = {name: name, image: image};
+    campgrounds.push(newCamp);
+    // redirect back to campgrounds page
+    res.redirect("/campgrounds");
+});
+
+app.get("/campgrounds/new", function(req, res){
+    res.render("new.ejs");
+});
 
 
 // =============================================================
