@@ -14,14 +14,26 @@ var campgroundSchema = new mongoose.Schema({
     image: String;
 });
 
-let campgrounds = [
+var Campground = mongoose.model("Campground", campgroundSchema);
+Campground.create({
+    name: "Oak Farm", 
+    image:"https://pixabay.com/get/eb37b60e20f6093ed1584d05fb1d4e97e07ee3d21cac104496f7c77ca7eebcbb_340.jpg"}, function(err, campground){
+    if(err){
+        console.log(err)
+    } else {
+        console.log("Newly Created Campground: ");
+        console.log(campground);
+    }
+});
+
+/* let campgrounds = [
     {name: "Oak Farm", image: "https://pixabay.com/get/eb37b60e20f6093ed1584d05fb1d4e97e07ee3d21cac104496f7c77ca7eebcbb_340.jpg"},
     {name: "Craighead Forest", image: "https://farm8.staticflickr.com/7503/15623542806_8058899c7d.jpg"},
     {name: "Granite Hill", image: "https://farm9.staticflickr.com/8292/7814932340_111154c9a8.jpg"},
     {name: "Oak Farm", image: "https://pixabay.com/get/eb37b60e20f6093ed1584d05fb1d4e97e07ee3d21cac104496f7c77ca7eebcbb_340.jpg"},
     {name: "Craighead Forest", image: "https://farm8.staticflickr.com/7503/15623542806_8058899c7d.jpg"},
     {name: "Granite Hill", image: "https://farm9.staticflickr.com/8292/7814932340_111154c9a8.jpg"}
-];
+]; */
 
 // =============================================================
 
@@ -34,8 +46,14 @@ app.get("/", function(req,res){
 });
 
 app.get("/campgrounds", function(req,res){
-
-    res.render("campgrounds", {campgrounds: campgrounds});
+    // Get all campground db
+    Campground.find({}, function(err, allCampgrounds){
+        if(err){
+            console.log(err);
+        } else(campgrounds){
+        res.render("campgrounds", {campgrounds: allCampgrounds});
+        }
+    });
 });
 
 app.post("/campgrounds", function(req,res){
@@ -43,7 +61,14 @@ app.post("/campgrounds", function(req,res){
     let name = req.body.name;
     let image = req.body.image;
     let newCamp = {name: name, image: image};
-    campgrounds.push(newCamp);
+    //Create a new campground and save to DB
+    Campground.create(newCamp, function(err, newlyCreated){
+        if(err){
+            console.log(err);
+        } else{
+            
+        }
+    })
     // redirect back to campgrounds page
     res.redirect("/campgrounds");
 });
