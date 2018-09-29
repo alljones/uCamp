@@ -2,9 +2,17 @@ const express = require("express");
 const app = express();
 const PORT = 8080;
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
+mongoose.connect("mongodb://localhost/ucamp");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
+
+//SCHEMA
+var campgroundSchema = new mongoose.Schema({
+    name: String;
+    image: String;
+});
 
 let campgrounds = [
     {name: "Oak Farm", image: "https://pixabay.com/get/eb37b60e20f6093ed1584d05fb1d4e97e07ee3d21cac104496f7c77ca7eebcbb_340.jpg"},
